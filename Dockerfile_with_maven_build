@@ -8,4 +8,4 @@ RUN mkdir /app
 WORKDIR /app
 COPY --from=build ./app/api/target/katalog-destinacij-api-1.0.0-SNAPSHOT.jar /app
 EXPOSE 8080
-CMD ["java", "-jar", "image-catalog-api-1.0.0-SNAPSHOT.jar"]
+CMD ["java", "-jar", "katalog-destinacij-api-1.0.0-SNAPSHOT.jar"]
