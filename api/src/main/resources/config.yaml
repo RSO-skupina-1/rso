@@ -8,7 +8,7 @@ kumuluzee:
     http:
       port: 8080
   datasources:
-    - jndi-name: jdbc/katalog-destinacijDS
+    - jndi-name: jdbc/KatalogDestinacijDS
       connection-url: jdbc:postgresql://localhost:5432/katalog-destinacij
       username: dbuser
       password: postgres

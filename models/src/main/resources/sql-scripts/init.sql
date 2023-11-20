@@ -1,1 +1,1 @@
-INSERT INTO katalog_destinacij (title, description, location, accessibility, infrastructure, price) VALUES ('Kranjska Gora', 'Slovensko smučarsko središče.', 'SZ Slovenije', 'Avto, kolo, avtobus', 'smučišče, kolesarska pot, proga za tek na smučeh');
+INSERT INTO katalog_destinacij (title, description, location, accessibility, infrastructure, price) VALUES ('Kranjska Gora', 'Slovensko smučarsko središče.', 'SZ Slovenije', 'Avto, kolo, avtobus', 'smučišče, kolesarska pot, proga za tek na smučeh', 20.00);
