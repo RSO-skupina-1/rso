@@ -9,8 +9,8 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
-import si.fri.rso.katalogdestinacij.lib.ImageMetadata;
-import si.fri.rso.katalogdestinacij.services.beans.ImageMetadataBean;
+import si.fri.rso.katalogdestinacij.lib.KatalogDestinacij;
+import si.fri.rso.katalogdestinacij.services.beans.KatalogDestinacijBean;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -25,55 +25,55 @@ import java.util.logging.Logger;
 
 
 @ApplicationScoped
-@Path("/images")
+@Path("/katalogDestinacij")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class ImageMetadataResource {
+public class KatalogDestinacijResource {
 
-    private Logger log = Logger.getLogger(ImageMetadataResource.class.getName());
+    private Logger log = Logger.getLogger(KatalogDestinacijResource.class.getName());
 
     @Inject
-    private ImageMetadataBean imageMetadataBean;
+    private KatalogDestinacijBean katalogDestinacijBean;
 
 
     @Context
     protected UriInfo uriInfo;
 
-    @Operation(description = "Get all image metadata.", summary = "Get all metadata")
+    @Operation(description = "Get all katalog destinacij.", summary = "Get all metadata")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "List of image metadata",
-                    content = @Content(schema = @Schema(implementation = ImageMetadata.class, type = SchemaType.ARRAY)),
+                    description = "List of destinacij",
+                    content = @Content(schema = @Schema(implementation = KatalogDestinacij.class, type = SchemaType.ARRAY)),
                     headers = {@Header(name = "X-Total-Count", description = "Number of objects in list")}
             )})
     @GET
-    public Response getImageMetadata() {
-
-        List<ImageMetadata> imageMetadata = imageMetadataBean.getImageMetadataFilter(uriInfo);
+    public Response getKatalogDestinacij() {
+        log.info("Get all katalog destinacij.") ;
+        List<KatalogDestinacij> imageMetadata = katalogDestinacijBean.getKatalogDestinacijFilter(uriInfo);
 
         return Response.status(Response.Status.OK).entity(imageMetadata).build();
     }
 
 
-    @Operation(description = "Get metadata for an image.", summary = "Get metadata for an image")
+    @Operation(description = "Get metadata for an destinacija.", summary = "Get metadata for an destinacija")
     @APIResponses({
             @APIResponse(responseCode = "200",
-                    description = "Image metadata",
+                    description = "Katalog destinacij",
                     content = @Content(
-                            schema = @Schema(implementation = ImageMetadata.class))
+                            schema = @Schema(implementation = KatalogDestinacij.class))
             )})
     @GET
-    @Path("/{imageMetadataId}")
-    public Response getImageMetadata(@Parameter(description = "Metadata ID.", required = true)
-                                     @PathParam("imageMetadataId") Integer imageMetadataId) {
+    @Path("/{katalogDestinacijId}")
+    public Response getKatalogDestinacij(@Parameter(description = "Metadata ID.", required = true)
+                                     @PathParam("katalogDestinacijId") Integer imageMetadataId) {
 
-        ImageMetadata imageMetadata = imageMetadataBean.getImageMetadata(imageMetadataId);
+        KatalogDestinacij katalogDestinacij = katalogDestinacijBean.getKatalogDestinacij(imageMetadataId);
 
-        if (imageMetadata == null) {
+        if (katalogDestinacij == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
-        return Response.status(Response.Status.OK).entity(imageMetadata).build();
+        return Response.status(Response.Status.OK).entity(katalogDestinacij).build();
     }
 
     @Operation(description = "Add image metadata.", summary = "Add metadata")
@@ -84,24 +84,24 @@ public class ImageMetadataResource {
             @APIResponse(responseCode = "405", description = "Validation error .")
     })
     @POST
-    public Response createImageMetadata(@RequestBody(
-            description = "DTO object with image metadata.",
+    public Response createKatalogDestinacij(@RequestBody(
+            description = "DTO object with destinacija metadata.",
             required = true, content = @Content(
-            schema = @Schema(implementation = ImageMetadata.class))) ImageMetadata imageMetadata) {
+            schema = @Schema(implementation = KatalogDestinacij.class))) KatalogDestinacij katalogDestinacij) {
 
-        if ((imageMetadata.getTitle() == null || imageMetadata.getDescription() == null || imageMetadata.getUri() == null)) {
+        if ((katalogDestinacij.getTitle() == null || katalogDestinacij.getDescription() == null)) {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }
         else {
-            imageMetadata = imageMetadataBean.createImageMetadata(imageMetadata);
+            katalogDestinacij = katalogDestinacijBean.createKatalogDestinacij(katalogDestinacij);
         }
 
-        return Response.status(Response.Status.CONFLICT).entity(imageMetadata).build();
+        return Response.status(Response.Status.CONFLICT).entity(katalogDestinacij).build();
 
     }
 
 
-    @Operation(description = "Update metadata for an image.", summary = "Update metadata")
+    @Operation(description = "Update metadata for an destinacija.", summary = "Update metadata")
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
@@ -109,18 +109,18 @@ public class ImageMetadataResource {
             )
     })
     @PUT
-    @Path("{imageMetadataId}")
+    @Path("{katalogDestinacijId}")
     public Response putImageMetadata(@Parameter(description = "Metadata ID.", required = true)
-                                     @PathParam("imageMetadataId") Integer imageMetadataId,
+                                     @PathParam("katalogDestinacijId") Integer imageMetadataId,
                                      @RequestBody(
                                              description = "DTO object with image metadata.",
                                              required = true, content = @Content(
-                                             schema = @Schema(implementation = ImageMetadata.class)))
-                                             ImageMetadata imageMetadata){
+                                             schema = @Schema(implementation = KatalogDestinacij.class)))
+                                     KatalogDestinacij katalogDestinacij){
 
-        imageMetadata = imageMetadataBean.putImageMetadata(imageMetadataId, imageMetadata);
+        katalogDestinacij = katalogDestinacijBean.putImageMetadata(imageMetadataId, katalogDestinacij);
 
-        if (imageMetadata == null) {
+        if (katalogDestinacij == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
 
@@ -128,7 +128,7 @@ public class ImageMetadataResource {
 
     }
 
-    @Operation(description = "Delete metadata for an image.", summary = "Delete metadata")
+    @Operation(description = "Delete metadata for an destinacija.", summary = "Delete metadata")
     @APIResponses({
             @APIResponse(
                     responseCode = "200",
@@ -140,11 +140,11 @@ public class ImageMetadataResource {
             )
     })
     @DELETE
-    @Path("{imageMetadataId}")
-    public Response deleteImageMetadata(@Parameter(description = "Metadata ID.", required = true)
-                                        @PathParam("imageMetadataId") Integer imageMetadataId){
+    @Path("{katalogDestinacijId}")
+    public Response deleteKatalogDestinacij(@Parameter(description = "Metadata ID.", required = true)
+                                        @PathParam("katalogDestinacijId") Integer imageMetadataId){
 
-        boolean deleted = imageMetadataBean.deleteImageMetadata(imageMetadataId);
+        boolean deleted = katalogDestinacijBean.deleteImageMetadata(imageMetadataId);
 
         if (deleted) {
             return Response.status(Response.Status.NO_CONTENT).build();

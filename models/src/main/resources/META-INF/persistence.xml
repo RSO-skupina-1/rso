@@ -3,7 +3,7 @@
     <persistence-unit name="image-catalog-jpa" transaction-type="RESOURCE_LOCAL">
         <non-jta-data-source>jdbc/ImageMetadataDS</non-jta-data-source>
 
-        <class>si.fri.rso.katalogdestinacij.models.entities.ImageMetadataEntity</class>
+        <class>si.fri.rso.katalogdestinacij.models.entities.KatalogDestinacijEntity</class>
         <class>si.fri.rso.katalogdestinacij.models.converters.InstantAtributeConverter</class>
 
         <properties>

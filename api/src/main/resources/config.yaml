@@ -8,19 +8,19 @@ kumuluzee:
     http:
       port: 8080
   datasources:
-    - jndi-name: jdbc/ImageMetadataDS
-      connection-url: jdbc:postgresql://localhost:5432/image-metadata
+    - jndi-name: jdbc/katalog-destinacijDS
+      connection-url: jdbc:postgresql://localhost:5432/katalog-destinacij
       username: dbuser
       password: postgres
   health:
     checks:
       data-source-health-check:
         type: liveness
-        jndi-name: jdbc/ImageMetadataDS
+        jndi-name: jdbc/KatalogDestinacijDS
   metrics:
     web-instrumentation:
-      - name: images-endpoint
-        url-pattern: /v1/images/*
+      - name: destinacije-endpoint
+        url-pattern: /v1/katalogDestinacij/*
 rest-properties:
   broken: false
 
