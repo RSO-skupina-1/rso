@@ -53,9 +53,9 @@ public class KatalogDestinacijResource {
     @GET
     public Response getKatalogDestinacij() {
         log.info("Get all katalog destinacij.") ;
-        List<KatalogDestinacij> imageMetadata = katalogDestinacijBean.getKatalogDestinacijFilter(uriInfo);
+        List<KatalogDestinacij> katalogDesitnacij = katalogDestinacijBean.getKatalogDestinacijFilter(uriInfo);
 
-        return Response.status(Response.Status.OK).entity(imageMetadata).build();
+        return Response.status(Response.Status.OK).entity(katalogDesitnacij).build();
     }
 
 
@@ -66,6 +66,16 @@ public class KatalogDestinacijResource {
                     content = @Content(
                             schema = @Schema(implementation = KatalogDestinacij.class))
             )})
+
+    @GET
+    @Path("/nearest/{startlat}/{startlng}/{offset}/{limit}")
+    public Response getClosestKatalogDestinacij(@PathParam("startlat") float startlat, @PathParam("startlng") float startlng, @PathParam("offset") int offset, @PathParam("limit") int limit) {
+        log.info("Get all nearest katalog destinacij.") ;
+        List<KatalogDestinacij> katalogDestinacij = katalogDestinacijBean.getNearestKatalogDestinacij(startlat, startlng, offset, limit);
+
+        return Response.status(Response.Status.OK).entity(katalogDestinacij).build();
+    }
+
     @GET
     @Path("/{katalogDestinacijId}")
     public Response getKatalogDestinacij(@Parameter(description = "Metadata ID.", required = true)

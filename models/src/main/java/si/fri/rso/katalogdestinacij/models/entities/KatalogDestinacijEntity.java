@@ -7,8 +7,13 @@ import javax.persistence.*;
 @NamedQueries(value =
         {
                 @NamedQuery(name = "KatalogDestinacijEntity.getAll",
-                        query = "SELECT kd FROM KatalogDestinacijEntity kd")
+                        query = "SELECT kd FROM KatalogDestinacijEntity kd"),
+                /*@NamedQuery(name = "KatalogDestinacijEntity.getNearest",
+                        query = "SELECT kd FROM KatalogDestinacijEntity kd ORDER BY SQRT(POWER((kd.longitude - :currentLongitude), 2) + POWER((kd.latitude - :currentLatitude), 2))"),
+        */
         })
+
+
 public class KatalogDestinacijEntity {
 
     @Id
@@ -24,6 +29,13 @@ public class KatalogDestinacijEntity {
     // add columns: location (longitude, latitude), accessibility, infrastructure, price, activities
     @Column(name = "location")
     private String location;
+
+    @Column(name = "longitude")
+    private float longitude;
+
+    @Column(name = "latitude")
+    private float latitude;
+
 
     @Column(name = "accessibility")
     private String accessibility;
@@ -68,6 +80,22 @@ public class KatalogDestinacijEntity {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
     public String getAccessibility() {

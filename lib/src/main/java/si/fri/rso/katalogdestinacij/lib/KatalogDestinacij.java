@@ -9,6 +9,9 @@ public class KatalogDestinacij {
     private String title;
     private String description;
     private String location;
+    private float longitude;
+    private float latitude;
+
     private String accessibility;
     private String infrastructure;
     private float price;
@@ -45,6 +48,22 @@ public class KatalogDestinacij {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+
+    public float getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+
+    public float getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
 
     public String getAccessibility() {
