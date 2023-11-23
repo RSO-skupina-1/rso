@@ -1,1 +1,1 @@
-INSERT INTO katalog_destinacij_metadata (title, description, location, accessibility, infrastructure, price) VALUES ('Kranjska Gora', 'Slovensko smučarsko središče.', 'SZ Slovenije', 'Avto, kolo, avtobus', 'smučišče, kolesarska pot, proga za tek na smučeh', 20.00);
+INSERT INTO katalog_destinacij_metadata (title, description, location, latitude, longitude, accessibility, infrastructure, price) VALUES ('Kranjska Gora', 'Slovensko smučarsko središče.', 'SZ Slovenije', 46.484730, 13.782660, 'Avto, kolo, avtobus', 'smučišče, kolesarska pot, proga za tek na smučeh', 20.00);

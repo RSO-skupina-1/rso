@@ -3,6 +3,8 @@ package si.fri.rso.katalogdestinacij.services.beans;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQuery;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.UriInfo;
@@ -39,6 +41,16 @@ public class KatalogDestinacijBean {
 
     }
 
+    public List<KatalogDestinacij> getNearestKatalogDestinacij(float startlat, float startlng, int offset, int limit) {
+        //String queryString = "SELECT e FROM KatalogDestinacij e ORDER BY SQRT(POWER((e.longitude - :currentLongitude), 2) + POWER((e.latitude - :currentLatitude), 2))";
+        String queryString = "SELECT *, SQRT(POWER((longitude -"+startlng + "), 2) + POWER((latitude - "+startlat+"), 2)) as distance FROM katalog_destinacij_metadata ORDER BY distance";
+        Query query = em.createNativeQuery(queryString, KatalogDestinacijEntity.class)
+                .setFirstResult(offset)
+                .setMaxResults(limit);
+        List<KatalogDestinacijEntity> resultList = query.getResultList();
+        return resultList.stream().map(KatalogDestinacijConverter::toDto).collect(Collectors.toList());
+    }
+
     public List<KatalogDestinacij> getKatalogDestinacijFilter(UriInfo uriInfo) {
 
         QueryParameters queryParameters = QueryParameters.query(uriInfo.getRequestUri().getQuery()).defaultOffset(0)
@@ -60,7 +72,6 @@ public class KatalogDestinacijBean {
 
         return katalogDestinacij;
     }
-
     public KatalogDestinacij createKatalogDestinacij(KatalogDestinacij katalogDestinacij) {
 
         KatalogDestinacijEntity katalogDestinacijEntity = KatalogDestinacijConverter.toEntity(katalogDestinacij);

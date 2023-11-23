@@ -12,6 +12,8 @@ public class KatalogDestinacijConverter {
         dto.setTitle(entity.getTitle());
         dto.setDescription(entity.getDescription());
         dto.setLocation(entity.getLocation());
+        dto.setLongitude(entity.getLongitude());
+        dto.setLatitude(entity.getLatitude());
         dto.setAccessibility(entity.getAccessibility());
         dto.setInfrastructure(entity.getInfrastructure());
         dto.setPrice(entity.getPrice());
@@ -27,6 +29,8 @@ public class KatalogDestinacijConverter {
         entity.setTitle(dto.getTitle());
         entity.setDescription(dto.getDescription());
         entity.setLocation(dto.getLocation());
+        entity.setLongitude(dto.getLongitude());
+        entity.setLatitude(dto.getLatitude());
         entity.setAccessibility(dto.getAccessibility());
         entity.setInfrastructure(dto.getInfrastructure());
         entity.setPrice(dto.getPrice());

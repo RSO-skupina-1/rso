@@ -1,5 +1,5 @@
 kumuluzee:
-  name: image-catalog-service
+  name: katalog-destinacij-service
   env:
     name: dev
   version: 1.0.0

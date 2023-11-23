@@ -1,5 +1,8 @@
 package si.fri.rso.katalogdestinacij.api.v1.resources;
 
+import org.eclipse.microprofile.metrics.MetricUnits;
+import org.eclipse.microprofile.metrics.annotation.Counted;
+import org.eclipse.microprofile.metrics.annotation.Gauge;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
 import org.eclipse.microprofile.openapi.annotations.headers.Header;
@@ -39,6 +42,7 @@ public class KatalogDestinacijResource {
     @Context
     protected UriInfo uriInfo;
 
+    @Counted(name = "get_all_katalog_destinacij_count")
     @Operation(description = "Get all katalog destinacij.", summary = "Get all metadata")
     @APIResponses({
             @APIResponse(responseCode = "200",
@@ -49,9 +53,9 @@ public class KatalogDestinacijResource {
     @GET
     public Response getKatalogDestinacij() {
         log.info("Get all katalog destinacij.") ;
-        List<KatalogDestinacij> imageMetadata = katalogDestinacijBean.getKatalogDestinacijFilter(uriInfo);
+        List<KatalogDestinacij> katalogDesitnacij = katalogDestinacijBean.getKatalogDestinacijFilter(uriInfo);
 
-        return Response.status(Response.Status.OK).entity(imageMetadata).build();
+        return Response.status(Response.Status.OK).entity(katalogDesitnacij).build();
     }
 
 
@@ -62,6 +66,16 @@ public class KatalogDestinacijResource {
                     content = @Content(
                             schema = @Schema(implementation = KatalogDestinacij.class))
             )})
+
+    @GET
+    @Path("/nearest/{startlat}/{startlng}/{offset}/{limit}")
+    public Response getClosestKatalogDestinacij(@PathParam("startlat") float startlat, @PathParam("startlng") float startlng, @PathParam("offset") int offset, @PathParam("limit") int limit) {
+        log.info("Get all nearest katalog destinacij.") ;
+        List<KatalogDestinacij> katalogDestinacij = katalogDestinacijBean.getNearestKatalogDestinacij(startlat, startlng, offset, limit);
+
+        return Response.status(Response.Status.OK).entity(katalogDestinacij).build();
+    }
+
     @GET
     @Path("/{katalogDestinacijId}")
     public Response getKatalogDestinacij(@Parameter(description = "Metadata ID.", required = true)
@@ -83,6 +97,7 @@ public class KatalogDestinacijResource {
             ),
             @APIResponse(responseCode = "405", description = "Validation error .")
     })
+    @Counted(name = "number_of_created_katalog_destinacij")
     @POST
     public Response createKatalogDestinacij(@RequestBody(
             description = "DTO object with destinacija metadata.",
@@ -109,6 +124,7 @@ public class KatalogDestinacijResource {
             )
     })
     @PUT
+    @Counted(name = "number_of_updated_katalog_destinacij")
     @Path("{katalogDestinacijId}")
     public Response putImageMetadata(@Parameter(description = "Metadata ID.", required = true)
                                      @PathParam("katalogDestinacijId") Integer imageMetadataId,
@@ -140,6 +156,7 @@ public class KatalogDestinacijResource {
             )
     })
     @DELETE
+    @Counted(name = "number_of_deleted_katalog_destinacij")
     @Path("{katalogDestinacijId}")
     public Response deleteKatalogDestinacij(@Parameter(description = "Metadata ID.", required = true)
                                         @PathParam("katalogDestinacijId") Integer imageMetadataId){
