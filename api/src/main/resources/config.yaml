@@ -9,15 +9,14 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/KatalogDestinacijDS
-      connection-url: jdbc:postgresql://cornelius.db.elephantsql.com:5432/nwwikuzy
-      username: nwwikuzy
-      password: Lzyr5Nsj5W1emnEDiX8Yy_BApgExJSka
-  # elephantsql dovoljuje samo 5 povezav na bazo, healthchecki jih ustvarijo več
-  #health:
-  #  checks:
-  #    data-source-health-check:
-  #      type: liveness
-  #      jndi-name: jdbc/KatalogDestinacijDS
+      connection-url: jdbc:postgresql://ep-ancient-fog-19741782-pooler.eu-central-1.aws.neon.tech/izletnik
+      username: grzin
+      password: ep2sMLqtu3rk
+  health:
+    checks:
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/KatalogDestinacijDS
   metrics:
     web-instrumentation:
       - name: destinacije-endpoint
