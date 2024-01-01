@@ -26,9 +26,13 @@ docker push rso/katalog
 docker network ls  
 docker network rm rso
 docker network create rso
-docker run -d --name pg-katalog-destinacij -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=katalog-destinacij -p 5432:5432 --network rso postgres:13
 docker inspect pg-katalog-destinacij
-docker run -p 8080:8080 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://pg-katalog-destinacij:5432/katalog-destinacij rso/katalog
+docker run -p 8080:8080 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://ep-twilight-meadow-75165427.eu-central-1.aws.neon.tech/katalog-destinacij-db -e KUMULUZEE_DATASOURCES0_USERNAME=urbi.cor -e KUMULUZEE_DATASOURCES0_PASSWORD=XW6sdZnq3jpH rso/katalog
+```
+
+```bash
+docker run -d --name pg-katalog-destinacij -e POSTGRES_USER=dbuser -e POSTGRES_PASSWORD=postgres -e POSTGRES_DB=katalog-destinacij -p 5432:5432 --network rso postgres:13
+docker run -p 8080:8080 --network rso -e KUMULUZEE_DATASOURCES0_CONNECTIONURL=jdbc:postgresql://cornelius.db.elephantsql.com:5432/vfnyrtrv -e KUMULUZEE_DATASOURCES0_USERNAME=vfnyrtrv -e KUMULUZEE_DATASOURCES0_PASSWORD=j-7erenWTC7oFeU2WGhynmusLLApAu3I rso/katalog
 ```
 
 ## Kubernetes

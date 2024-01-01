@@ -9,18 +9,30 @@ kumuluzee:
       port: 8080
   datasources:
     - jndi-name: jdbc/KatalogDestinacijDS
-      connection-url: jdbc:postgresql://localhost:5432/katalog-destinacij
-      username: dbuser
-      password: postgres
+      connection-url: jdbc:postgresql://ep-twilight-meadow-75165427.eu-central-1.aws.neon.tech/katalog-destinacij-db
+      username: urbi.cor
+      password: XW6sdZnq3jpH
+    #  connection-url: jdbc:postgresql://localhost:5432/katalog-destinacij
+    #  username: dbuser
+    #  password: postgres
+    - jndi-name: jdbc/NeonTechKatalogDestinacijDS
+      connection-url: jdbc:postgresql://ep-twilight-meadow-75165427.eu-central-1.aws.neon.tech/katalog-destinacij-db
+      username: urbi.cor
+      password: XW6sdZnq3jpH
   health:
     checks:
       data-source-health-check:
         type: liveness
-        jndi-name: jdbc/KatalogDestinacijDS
+        jndi-name: jdbc/NeonTechKatalogDestinacijDS
   metrics:
     web-instrumentation:
       - name: destinacije-endpoint
         url-pattern: /v1/katalogDestinacij/*
+  openapi-mp:
+    enabled: true
+    scan:
+      packages:
+        - si.fri.rso.katalog-destinacij.api
 rest-properties:
   broken: false
 
