@@ -12,6 +12,8 @@ import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
 import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.responses.APIResponses;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import si.fri.rso.katalogdestinacij.lib.KatalogDestinacij;
 import si.fri.rso.katalogdestinacij.services.beans.KatalogDestinacijBean;
 
@@ -22,6 +24,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -43,7 +49,7 @@ public class KatalogDestinacijResource {
     protected UriInfo uriInfo;
 
     @Counted(name = "get_all_katalog_destinacij_count")
-    @Operation(description = "Get all katalog destinacij.", summary = "Get all metadata")
+    @Operation(description = "Returns all katalog destinacij.", summary = "Katalog destinacij list")
     @APIResponses({
             @APIResponse(responseCode = "200",
                     description = "List of destinacij",
@@ -74,6 +80,86 @@ public class KatalogDestinacijResource {
         List<KatalogDestinacij> katalogDestinacij = katalogDestinacijBean.getNearestKatalogDestinacij(startlat, startlng, offset, limit);
 
         return Response.status(Response.Status.OK).entity(katalogDestinacij).build();
+    }
+
+    @GET
+    @Path("/nearestByName/{name}")
+    public Response getClosestKatalogDestinacij(@PathParam("name") String locationName) {
+
+        // make a request to open street map api to get the coordinates of the name
+        // then call the getNearestKatalogDestinacij function with the coordinates  and return the result
+
+
+        try {
+            String apiUrl = "https://nominatim.openstreetmap.org/search?q=" + locationName +"&format=json&limit=1";
+            float startlat;
+            float startlng;
+
+            URL url = new URL(apiUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+            // Set request method to GET
+            connection.setRequestMethod("GET");
+
+            // Get the response code
+            int responseCode = connection.getResponseCode();
+
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Read the response
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                StringBuilder response = new StringBuilder();
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                reader.close();
+
+                // Parse the JSON response
+                // Extract latitude and longitude from the JSON response here
+
+                //System.out.println("Response: " + response.toString());
+                float[] coordinates = parseCoordinates(response.toString());
+                startlat = coordinates[0];
+                startlng = coordinates[1];
+                connection.disconnect();
+                List<KatalogDestinacij> katalogDestinacij = katalogDestinacijBean.getNearestKatalogDestinacij(startlat, startlng, 0, 10);
+
+                return Response.status(Response.Status.OK).entity(katalogDestinacij).build();
+            } else {
+                return Response.status(Response.Status.NOT_FOUND).build();
+            }
+
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Response.status(Response.Status.NOT_FOUND).build();
+        }
+    }
+
+    private float[] parseCoordinates(String jsonResponse) {
+        try {
+            JSONArray jsonArray = new JSONArray(jsonResponse);
+
+            if (jsonArray.length() > 0) {
+                JSONObject firstResult = jsonArray.getJSONObject(0);
+
+                // Extract latitude and longitude
+                float latitude = (float) firstResult.getDouble("lat");
+                float longitude = (float) firstResult.getDouble("lon");
+
+                return new float[]{latitude, longitude};
+            } else {
+                System.out.println("No results found in the JSON response.");
+                return new float[]{};
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @GET
