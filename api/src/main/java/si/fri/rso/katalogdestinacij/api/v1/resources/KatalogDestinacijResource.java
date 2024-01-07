@@ -199,7 +199,7 @@ public class KatalogDestinacijResource {
             @APIResponse(responseCode = "201",
                     description = "Destination successfully added."
             ),
-            @APIResponse(responseCode = "405", description = "Validation error .")
+            @APIResponse(responseCode = "400", description = "Bad request, title or description missing.")
     })
     @Counted(name = "number_of_created_katalog_destinacij")
     @POST
@@ -213,9 +213,11 @@ public class KatalogDestinacijResource {
         }
         else {
             katalogDestinacij = katalogDestinacijBean.createKatalogDestinacij(katalogDestinacij);
+
+            return Response.status(Response.Status.CREATED).entity(katalogDestinacij).build();
         }
 
-        return Response.status(Response.Status.CONFLICT).entity(katalogDestinacij).build();
+        //return Response.status(Response.Status.CONFLICT).entity(katalogDestinacij).build();
 
     }
 
@@ -274,9 +276,5 @@ public class KatalogDestinacijResource {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
-
-
-
-
 
 }
