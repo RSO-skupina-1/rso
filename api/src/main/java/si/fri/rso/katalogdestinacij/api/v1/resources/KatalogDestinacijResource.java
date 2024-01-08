@@ -1,6 +1,7 @@
 package si.fri.rso.katalogdestinacij.api.v1.resources;
 
 import com.kumuluz.ee.cors.annotations.CrossOrigin;
+import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
@@ -35,7 +36,7 @@ import java.util.List;
 import java.util.logging.Logger;
 
 
-
+@Log
 @ApplicationScoped
 @Path("/katalogDestinacij")
 @Produces(MediaType.APPLICATION_JSON)
