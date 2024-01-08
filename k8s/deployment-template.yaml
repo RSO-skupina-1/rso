@@ -13,7 +13,7 @@ spec:
         app: katalog-destinacij
     spec:
       containers:
-        - image: corurban/rso:2023-11-23-03-45-51
+        - image: corurban/rso:2024-01-08-10-41-49
           name: katalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -49,10 +49,9 @@ kind: Service
 metadata:
   name: katalog-destinacij-service
 spec:
-  type: LoadBalancer
   ports:
-    - port: 8080
+    - port: 80
       protocol: TCP
-      targetPort: server
+      targetPort: 8080
   selector:
     app: katalog-destinacij

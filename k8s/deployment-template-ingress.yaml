@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: my-ingress
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
+spec:
+  rules:
+    - host: katalog-destinacij.426c0549c45c4600b961.switzerlandnorth.aksapp.io
+      http:
+        paths:
+          - path: /v1/katalogDestinacij
+            pathType: Prefix
+            backend:
+              service:
+                name: katalog-destinacij-service
+                port:
+                  number: 80  # Service port exposed to Ingress
+          - path: /v1/uporabnik
+            pathType: Prefix
+            backend:
+              service:
+                name: uporabnik-service
+                port:
+                  number: 80  # Service port exposed to Ingress
