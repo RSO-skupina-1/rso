@@ -108,7 +108,7 @@ public class KatalogDestinacijResource {
         // make a request to open street map api to get the coordinates of the name
         // then call the getNearestKatalogDestinacij function with the coordinates  and return the result
 
-
+        log.info("Get all nearest katalog destinacij by name.") ;
         try {
             String apiUrl = "https://nominatim.openstreetmap.org/search?q=" + locationName +"&format=json&limit=1";
             float startlat;
