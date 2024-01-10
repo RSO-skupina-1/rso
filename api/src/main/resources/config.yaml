@@ -50,6 +50,8 @@ kumuluzee:
         url-pattern: /v1/katalogDestinacij/*
   openapi-mp:
     enabled: true
+    servlet:
+      mapping: /v1/katalogDestinacij/openapi
     scan:
       packages:
         - si.fri.rso.katalog-destinacij.api

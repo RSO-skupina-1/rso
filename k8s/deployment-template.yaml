@@ -21,6 +21,10 @@ spec:
             - name: KUMULUZEE_DATASOURCES0_USERNAME
               value: urbi.cor
             - name: KUMULUZEE_DATASOURCES0_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: neon-tech-db
+                  key: password
               value: XW6sdZnq3jpH
               #valueFrom: #use Kubernetes secret for storing the password
                 #secretKeyRef:
