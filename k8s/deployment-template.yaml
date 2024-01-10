@@ -13,7 +13,7 @@ spec:
         app: katalog-destinacij
     spec:
       containers:
-        - image: corurban/rso:2024-01-08-10-41-49
+        - image: corurban/rso:2024-01-11-04-15-05
           name: katalog
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -25,7 +25,7 @@ spec:
                 secretKeyRef:
                   name: neon-tech-db
                   key: password
-              value: XW6sdZnq3jpH
+              #value: XW6sdZnq3jpH
               #valueFrom: #use Kubernetes secret for storing the password
                 #secretKeyRef:
                   #name: elephant-db

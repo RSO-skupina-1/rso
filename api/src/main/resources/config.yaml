@@ -55,6 +55,8 @@ kumuluzee:
     scan:
       packages:
         - si.fri.rso.katalog-destinacij.api
+    ui:
+      path: /v1/katalogDestinacij/openapi-ui
   cors:
     enabled: true
     paths: "/*"
