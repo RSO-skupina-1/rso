@@ -23,3 +23,17 @@ spec:
                 name: uporabnik-service
                 port:
                   number: 80  # Service port exposed to Ingress
+          - path: /v1/komentar
+            pathType: Prefix
+            backend:
+              service:
+                name: komentar-service
+                port:
+                  number: 80  # Service port exposed to Ingress
+          - path: /v1/priporocilni
+            pathType: Prefix
+            backend:
+              service:
+                name: priporocilni-service
+                port:
+                  number: 80  # Service port exposed to Ingress
