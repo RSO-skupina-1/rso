@@ -5,6 +5,7 @@ import com.kumuluz.ee.logs.cdi.Log;
 import org.eclipse.microprofile.metrics.MetricUnits;
 import org.eclipse.microprofile.metrics.annotation.Counted;
 import org.eclipse.microprofile.metrics.annotation.Gauge;
+import org.eclipse.microprofile.metrics.annotation.Timed;
 import org.eclipse.microprofile.openapi.annotations.Operation;
 import org.eclipse.microprofile.openapi.annotations.enums.ParameterIn;
 import org.eclipse.microprofile.openapi.annotations.enums.SchemaType;
@@ -91,6 +92,8 @@ public class KatalogDestinacijResource {
         return Response.status(Response.Status.OK).entity(katalogDestinacij).build();
     }
 
+    @Counted(name = "get_closest_counted")
+    @Timed(name = "get_closest_timed")
     @Operation(description = "Get nearest destinations by name.", summary = "Returns nearest destinations around named location.")
     @APIResponses({
             @APIResponse(responseCode = "200",

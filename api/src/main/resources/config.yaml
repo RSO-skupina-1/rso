@@ -45,9 +45,9 @@ kumuluzee:
                                   </Loggers>
                               </Configuration>'
   metrics:
-    web-instrumentation:
-      - name: destinacije-endpoint
-        url-pattern: /v1/katalogDestinacij/*
+    servlet:
+      enabled: true
+      mapping: /v1/katalogDestinacij/metrics
   openapi-mp:
     enabled: true
     servlet:
