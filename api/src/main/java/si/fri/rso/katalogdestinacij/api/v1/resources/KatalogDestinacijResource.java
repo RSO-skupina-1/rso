@@ -41,7 +41,7 @@ import java.util.logging.Logger;
 @Path("/katalogDestinacij")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-@CrossOrigin(name="katalogDestinacij", allowOrigin = "*")
+@CrossOrigin(name="katalogDestinacij", allowOrigin = "*", supportedMethods = "GET, POST, HEAD, PUT, DELETE, OPTIONS")
 public class KatalogDestinacijResource {
 
     private Logger log = Logger.getLogger(KatalogDestinacijResource.class.getName());

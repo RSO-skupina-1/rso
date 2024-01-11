@@ -56,7 +56,8 @@ kumuluzee:
       packages:
         - si.fri.rso.katalog-destinacij.api
     ui:
-      path: /v1/katalogDestinacij/openapi-ui
+      mapping: /v1/uporabnik/api-specs/ui
+      specification-server: http://localhost:8080
   cors:
     enabled: true
     paths: "/*"
